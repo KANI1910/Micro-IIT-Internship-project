@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title> <!-- Project title updated to Sentiment Analysis -->
+    <style>
+        body {
+            background-color: pink; /* Pink background */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: white;
+            margin-bottom: 30px; /* Adds space below the title */
+        }
+        .container {
+            width: 60%;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .result {
+            font-size: 20px;
+            margin-top: 30px; /* Adds space between the result and the input */
+        }
+        /* Styling for the green submit button */
+        .submit-btn {
+            padding: 12px 20px;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px; /* Adds space between input and button */
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+        .submit-btn span {
+            margin-left: 8px; /* Spacing between text and emoji */
+        }
+        input[type="text"] {
+            width: 80%; /* Make the text input fit well inside */
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px; /* Space between input and button */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Sentiment Analysis</h1> <!-- Updated title on the page -->
+    
+    <div class="container">
+        <input type="text" id="inputText" placeholder="Type a sentence to analyze its sentiment..." style="width: 80%; padding: 10px;">
+
+        <!-- Submit button with emoji -->
+        <button class="submit-btn" onclick="findEmotion()">
+            Analyze <span>🔍</span>
+        </button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function findEmotion() {
+            const inputText = document.getElementById("inputText").value.toLowerCase();
+            const resultDiv = document.getElementById("result");
+
+            // Define the emotions with keywords, statements, and emojis
+            const emotions = [
+                { keyword: ['happy', 'joy', 'excited'], statement: "Feeling great today! Enjoy the little things in life.", emoji: "😊" },
+                { keyword: ['sad', 'unhappy', 'down'], statement: "It's okay to feel down sometimes, tomorrow will be better.", emoji: "😢" },
+                { keyword: ['excited', 'thrilled', 'amazing'], statement: "I can't wait for what’s coming next! Let’s do this!", emoji: "🎉" },
+                { keyword: ['angry', 'frustrated', 'mad'], statement: "Take a deep breath. Let’s calm down and think.", emoji: "😡" },
+                { keyword: ['peaceful', 'calm', 'serene'], statement: "Everything is good. Just enjoying the peace.", emoji: "😌" },
+                { keyword: ['surprised', 'shocked', 'unexpected'], statement: "Wow! That was unexpected! What a shock!", emoji: "😲" },
+                { keyword: ['confused', 'lost', 'uncertain'], statement: "I’m not sure what just happened. I need some clarity.", emoji: "🤔" },
+                { keyword: ['fearful', 'scared', 'anxious'], statement: "It’s normal to feel afraid, but remember you’re stronger than you think.", emoji: "😨" },
+                { keyword: ['grateful', 'thankful', 'blessed'], statement: "Thankful for everything I have. Life is good.", emoji: "🙏" },
+                { keyword: ['bored', 'uninterested', 'uninspired'], statement: "I need a change of pace. Something exciting, please!", emoji: "😒" }
+            ];
+
+            let emotionFound = false;
+            let emotionStatement = "Your emotion is unclear. Try typing something else."; // Default message
+            let emotionEmoji = "😐"; // Default emoji
+
+            // Loop through the emotions and check if any keyword matches the input text
+            for (let i = 0; i < emotions.length; i++) {
+                for (let keyword of emotions[i].keyword) {
+                    if (inputText.includes(keyword)) {
+                        emotionFound = true;
+                        emotionStatement = emotions[i].statement;
+                        emotionEmoji = emotions[i].emoji;
+                        break;
+                    }
+                }
+                if (emotionFound) break; // Stop checking once an emotion is found
+            }
+
+            // Display the result
+            resultDiv.textContent = `Emotion: ${emotionStatement} ${emotionEmoji}`;
+        }
+    </script>
+
+</body>
+</html>
